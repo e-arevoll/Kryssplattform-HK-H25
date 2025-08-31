@@ -1,15 +1,8 @@
-import { Image } from 'expo-image';
-import {FlatList, Modal, Platform, Pressable, StyleSheet, Text, View} from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import {Colors} from "@/constants/Colors";
+import {FlatList, Modal, Pressable, StyleSheet, Text, View} from 'react-native';
 import {PostData} from "@/types/post";
 import Post from "@/components/Post";
 import { Stack } from "expo-router";
-import React, {useState} from "react";
+import {useState} from "react";
 
 export default function HomeScreen() {
 
@@ -22,38 +15,36 @@ export default function HomeScreen() {
             title: "Mitt andre innlegg!",
             description: "Ubeskrivelig flott!"
         },
-    ] ;
-
+    ];
 
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-  return (
+    return (
     <View style={styles.mainContainer}>
 
-        <Modal
-            visible={isModalVisible}>
-            <Pressable onPress={() => setIsModalVisible(true)}>
-                <Text>Knapp?</Text>
-            </Pressable>
+        <Stack.Screen
+            options={{
+                headerRight: () => (
+                    <Pressable onPress={() => setIsModalVisible(true)}>
+                        <Text>Knapp?</Text>
+                    </Pressable>
+                ),
+            }}
+            />
+        <Modal visible={isModalVisible} animationType="slide" transparent>
+                <View style={styles.pressableStyle}>
+                    <Text>This is a Modal!</Text>
+                    <Pressable onPress={() => setIsModalVisible(false)}>
+                    <Text style={styles.pressableTxt}>Knapp!</Text>
+                </Pressable>
 
+                </View>
         </Modal>
         <FlatList
             data={posts}
-            ItemSeparatorComponent={()=><View style={{height: 12}}></View>}
-            renderItem={(post) => (
-                <Post postData={post.item}/>
-            )}/>
-
-        <Stack.Screen
-            options={
-                {
-                    headerRight: () => (
-                        <Pressable onPress={() => console.log("Knapppppp!")}>
-                            <Text>Knapp</Text>
-                        </Pressable>
-                    )
-                }
-            }/>
+            ItemSeparatorComponent={()=><View style={{height: 16}}></View>}
+            renderItem={(post) => <Post postData={post.item}/>}
+        />
     </View>
   );
 }
@@ -61,8 +52,27 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        backgroundColor: "lightgray",
+        backgroundColor: "thistle",
         paddingHorizontal: 16,
         paddingVertical: 12,
+    },
+    pressableStyle: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "lightblue",
+        borderRadius: 8,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+    },
+    modalContainer: {
+        backgroundColor: "lightblue",
+    },
+    pressableTxt: {
+        backgroundColor: "lightyellow",
+        borderRadius: 50,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+
     },
 });

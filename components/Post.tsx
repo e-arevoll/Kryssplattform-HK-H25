@@ -5,12 +5,11 @@ export type PostProps = {
     postData: PostData;
 }
 
-
 export default function Post({ postData }: PostProps) {
 
     return (
         <View style={styles.post}>
-            <Text>{postData.title}</Text>
+            <Text style={styles.header}>{postData.title}</Text>
             <View>
                 <Text>{postData.description}</Text>
             </View>
@@ -19,16 +18,15 @@ export default function Post({ postData }: PostProps) {
 }
 
 const styles = StyleSheet.create({
-    mainContainer: {
-        flex: 1,
-        backgroundColor: "lightgray",
-        paddingHorizontal: 16,
-        paddingVertical: 12,
-    },
     post: {
         backgroundColor: "white",
         borderRadius: 8,
         paddingHorizontal: 12,
         paddingVertical: 8,
+    },
+    header: {
+        color: "darkslategrey",
+        borderRadius: 8,
+        flex: 0,
     }
 });
